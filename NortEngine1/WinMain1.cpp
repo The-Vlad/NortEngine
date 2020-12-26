@@ -6,6 +6,7 @@ int CALLBACK WinMain(
 	LPSTR		lpCmdLine,
 	int			nCmdShow)
 {
+	// testing git
 	const auto pClassName = "hw3dbutts";
 	// register window class (extended)
 	WNDCLASSEX wc = {0};
