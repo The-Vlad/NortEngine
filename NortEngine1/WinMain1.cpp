@@ -1,14 +1,15 @@
 #include <Windows.h>
 #include "WindowsMessageMap.h"
+#include <sstream>
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {		// Window Processor
+LRESULT CALLBACK WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam ) {		// Window Processor
 	static WindowsMessageMap mm;
 	OutputDebugString( mm( msg, lParam, wParam ).c_str() );
-	
+
 	switch (msg)
 	{
 	case WM_CLOSE:
-		PostQuitMessage(69);
+		PostQuitMessage( 69 );
 		break;
 	case WM_KEYDOWN:
 		if (wParam == 'F')
@@ -22,21 +23,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {		/
 			SetWindowText( hWnd, "Dangerfield" );
 		}
 		break;
+	case WM_CHAR:
+	{
+		static std::string title;
+		title.push_back( (char)wParam );
+		SetWindowText( hWnd, title.c_str() );
+		break;
 	}
-	return DefWindowProc(hWnd, msg, wParam, lParam);
+	case WM_LBUTTONDOWN:
+	{
+		const POINTS pt = MAKEPOINTS( lParam );
+		std::ostringstream oss;
+		oss << "(" << pt.x << "," << pt.y << ")";
+		SetWindowText( hWnd, oss.str().c_str() );
+		break;
+	}
+	}
+	return DefWindowProc( hWnd, msg, wParam, lParam );
 }
 
 int CALLBACK WinMain(
 	HINSTANCE	hInstance,
 	HINSTANCE	hPrevInstance,
 	LPSTR		lpCmdLine,
-	int			nCmdShow)
+	int			nCmdShow )
 {
 	const auto pClassName = "hw3dbutts";	// hard ware 3D butts
 
 	// register window class (extended) [may be creating own type of class to use it later. This class is not C++ class?]
-	WNDCLASSEX wc = {0};
-	wc.cbSize = sizeof(wc);
+	WNDCLASSEX wc = { 0 };
+	wc.cbSize = sizeof( wc );
 	wc.style = CS_OWNDC;
 	wc.lpfnWndProc = WndProc;
 	wc.cbClsExtra = 0;
@@ -48,7 +64,7 @@ int CALLBACK WinMain(
 	wc.lpszMenuName = nullptr;
 	wc.lpszClassName = pClassName;
 	wc.hIconSm = nullptr;
-	RegisterClassEx(&wc);
+	RegisterClassEx( &wc );
 
 	// create window		[here is creating the instance of the own created class]
 	HWND hWnd = CreateWindowEx(
@@ -60,14 +76,14 @@ int CALLBACK WinMain(
 	);
 
 	// show window			[use own created instance of the own created class]
-	ShowWindow(hWnd, SW_SHOW);
+	ShowWindow( hWnd, SW_SHOW );
 
 	// message pump
 	MSG msg;
 	BOOL gResult;
-	while ( (gResult = GetMessage(&msg, nullptr, 0, 0) ) > 0) {
-		TranslateMessage(&msg);
-		DispatchMessageW(&msg);
+	while ((gResult = GetMessage( &msg, nullptr, 0, 0 )) > 0) {
+		TranslateMessage( &msg );		// need for WM_CHAR messages
+		DispatchMessageW( &msg );
 	}
 
 	if (gResult == -1)
