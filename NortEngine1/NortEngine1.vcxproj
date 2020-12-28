@@ -159,10 +159,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Window.h" />
     <ClCompile Include="WindowsMessageMap.cpp" />
     <ClCompile Include="WinMain1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NortWin.h" />
     <ClInclude Include="WindowsMessageMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
