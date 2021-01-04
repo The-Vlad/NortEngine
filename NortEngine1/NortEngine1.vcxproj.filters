@@ -27,12 +27,18 @@
     <ClCompile Include="Window.h">
       <Filter>Файлы заголовков</Filter>
     </ClCompile>
+    <ClCompile Include="NortException.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowsMessageMap.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="NortWin.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="NortException.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
