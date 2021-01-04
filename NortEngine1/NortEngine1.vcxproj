@@ -168,7 +168,14 @@
   <ItemGroup>
     <ClInclude Include="NortException.h" />
     <ClInclude Include="NortWin.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="WindowsMessageMap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NortEngine1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="CommunistComputerGuyMeme.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
