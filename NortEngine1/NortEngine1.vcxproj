@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="NortException.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Window.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="WinMain1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="NortException.h" />
     <ClInclude Include="NortWin.h" />
     <ClInclude Include="resource.h" />
