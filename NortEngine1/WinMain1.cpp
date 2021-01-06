@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <sstream>
 
 
 int CALLBACK WinMain(
