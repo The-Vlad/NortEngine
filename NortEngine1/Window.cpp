@@ -89,6 +89,29 @@ void Window::SetTitle( const std::string& title )
 	}
 }
 
+std::optional<int> Window::ProcessMessages()
+{
+	// message pump
+	MSG msg;
+	// while queue has messages, remove and dispatch them (but do not block on empty queue)
+	while (PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ))
+	{
+		// check for quit because peekmessage does not signal this via return val
+		if (msg.message == WM_QUIT)
+		{
+			// return optional wrapping int (arg to PostQuitMessage is in wparam) signals quit
+			return msg.wParam;
+		}
+
+		// TranslateMessage will post auxiliary WM_CHAR messages from key msgs
+		TranslateMessage( &msg );		// need for WM_CHAR messages
+		DispatchMessage( &msg );
+	}
+
+	// return empty optional when not quitting app
+	return {};
+}
+
 // startup Message Procceeder
 LRESULT WINAPI Window::HandleMsgSetup( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam ) noexcept
 {
@@ -219,7 +242,6 @@ LRESULT Window::HandleMsg( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam ) n
 
 	return DefWindowProc( hWnd, msg, wParam, lParam );
 }
-
 
 // Window Exception Stuff
 Window::Exception::Exception( int line, const char* file, HRESULT hr ) noexcept
