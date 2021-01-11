@@ -72,8 +72,10 @@ Window::Window( int width, int height, const char* name )
 	{
 		throw NORTWND_LAST_EXCEPT();
 	}
-	// Show Window
+	// newly created windows start off as hidden
 	ShowWindow( hWnd, SW_SHOWDEFAULT );
+	// create graphics object
+	pGfx = std::make_unique<Graphics>( hWnd );
 }
 
 Window::~Window()
@@ -110,6 +112,11 @@ std::optional<int> Window::ProcessMessages()
 
 	// return empty optional when not quitting app
 	return {};
+}
+
+Graphics& Window::Gfx()
+{
+	return *pGfx;
 }
 
 // startup Message Procceeder
