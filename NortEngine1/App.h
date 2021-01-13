@@ -12,5 +12,5 @@ private:
 	void DoFrame();
 private:
 	Window wnd;
-	NortTimer timer;
+	NortTimer timer;	// for tests
 };
