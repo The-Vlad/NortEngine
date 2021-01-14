@@ -22,6 +22,8 @@ int App::Go()
 void App::DoFrame()
 {
 	const float c = sin( timer.Peek() ) / 2.0f + 0.5f;
+	wnd.Gfx().DrawTestTriangle();
 	wnd.Gfx().ClearBuffer( c, c, 1.0f );
+	// draw must be here after clear buffer function
 	wnd.Gfx().EndFrame();
 }

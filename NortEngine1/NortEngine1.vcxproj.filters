@@ -16,6 +16,9 @@
     <Filter Include="dxerr">
       <UniqueIdentifier>{8a4bb21a-d23f-4912-945f-de20553e6b32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{9f9987a9-a57e-4145-8a22-7efc783aa85e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain1.cpp">
@@ -116,5 +119,10 @@
     <None Include="DXTrace.inl">
       <Filter>dxerr</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="VertexShader.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
