@@ -3,6 +3,8 @@
 #include <sstream>
 #include "GraphicsThrowMacros.h"
 
+namespace wrl = Microsoft::WRL;
+
 #pragma comment(lib,"d3d11.lib")
 
 
@@ -50,32 +52,12 @@ Graphics::Graphics( HWND hWnd )
 	) );
 	// gain access to texture subresource in swap chain (back buffer)
 	// what's going on here???
-	ID3D11Resource* pBackBuffer = nullptr;
-	GFX_THROW_INFO( pSwap->GetBuffer( 0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pBackBuffer) ) );	// ID3D11Resource or ID3D11Texture2D?
-	GFX_THROW_INFO( pDevice->CreateRenderTargetView( pBackBuffer, nullptr, &pTarget ) );
-
-	pBackBuffer->Release();
+	wrl::ComPtr<ID3D11Resource> pBackBuffer;
+	GFX_THROW_INFO( pSwap->GetBuffer( 0, __uuidof(ID3D11Texture2D), &pBackBuffer ) );	// ID3D11Resource or ID3D11Texture2D?
+	GFX_THROW_INFO( pDevice->CreateRenderTargetView( pBackBuffer.Get(), nullptr, &pTarget ) );
 }
 
-Graphics::~Graphics()
-{
-	if (pTarget != nullptr)
-	{
-		pTarget->Release();
-	}
-	if (pContext != nullptr)
-	{
-		pContext->Release();
-	}
-	if (pSwap != nullptr)
-	{
-		pSwap->Release();
-	}
-	if (pDevice != nullptr)
-	{
-		pDevice->Release();
-	}
-}
+
 
 void Graphics::EndFrame()
 {
@@ -99,7 +81,7 @@ void Graphics::EndFrame()
 void Graphics::ClearBuffer( float red, float green, float blue ) noexcept
 {
 	const float color[] = { red, green, blue, 1.0f };
-	pContext->ClearRenderTargetView( pTarget, color );
+	pContext->ClearRenderTargetView( pTarget.Get(), color );
 }
 
 // Graphics exception stuff
